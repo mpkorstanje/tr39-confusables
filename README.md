@@ -22,3 +22,14 @@ skeleton("paypal").equals(skeleton("pàỳpąl")); // false
 Note on the use of `Skeleton`, from TR39:
 
 >  A skeleton is intended only for internal use for testing confusability of strings; the resulting text is not suitable for display to users, because it will appear to be a hodgepodge of different scripts. In particular, the result of mapping an identifier will not necessary be an identifier. Thus the confusability mappings can be used to test whether two identifiers are confusable (if their skeletons are the same), but should definitely not be used as a "normalization" of identifiers. 
+
+
+## Maven ##
+
+```
+<dependency>
+  <groupId>com.github.mpkorstanje</groupId>
+  <artifactId>tr39-confusables-skeleton</artifactId>
+  <version>0.5.0</version>
+</dependency>
+```
