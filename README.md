@@ -6,7 +6,7 @@ Skeleton algorithm from [Unicode TR39](http://www.unicode.org/reports/tr39/) for
 import static com.github.mpkorstanje.unicode.tr39confusables.Skeleton.skeleton;
 ...
 // Skeleton representations of unicode strings containing 
-// confusable characters are the equal 
+// confusable characters are equal 
 skeleton("paypal").equals(skeleton("paypal")); // true
 skeleton("paypal").equals(skeleton("𝔭𝒶ỿ𝕡𝕒ℓ")); // true
 skeleton("paypal").equals(skeleton("ρ⍺у𝓅𝒂ן")); // true
