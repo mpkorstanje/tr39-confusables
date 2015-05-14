@@ -17,6 +17,9 @@ public class SkeletonTest {
 	@Test
 	public void paypal() {
 		assertSameSkeleton("ρ⍺у𝓅𝒂ן", "𝔭𝒶ỿ𝕡𝕒ℓ");
+		assertSameSkeleton("paypal", "𝔭𝒶ỿ𝕡𝕒ℓ");
+		assertSameSkeleton("ρ⍺у𝓅𝒂ן", "paypal");
+
 		assertSameSkeleton("paypal", "paypal");
 	}
 
@@ -30,7 +33,7 @@ public class SkeletonTest {
 	@Test
 	public void diacritics() {
 		// Diacritics are affected not by skeleton function
-		assertDifferentSkeleton("ÂȘȚÎ", "asti");
+		assertDifferentSkeleton("ÂȘȚÎ", "ASTI");
 		assertSameSkeleton("ÂȘȚÎ", "ÂȘȚÎ");
 	}
 
