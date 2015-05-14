@@ -82,7 +82,10 @@ public final class TR39ConfusablesMojo extends AbstractMojo {
 		
 		GenerateTables generator = new GenerateTables(table,sourceDirectory,outputDirectory);
 		try {
-			generator.generate();
+			log.info("Downloading " + table);
+			generator.download();
+			log.info("Rendering templates");
+			generator.render();
 		} catch (IOException e) {
 			log.error(e);
 			throw new MojoExecutionException("Encountered a problem while generating confusables table", e);

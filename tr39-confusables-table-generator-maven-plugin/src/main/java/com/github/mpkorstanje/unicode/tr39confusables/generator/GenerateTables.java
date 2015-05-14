@@ -20,7 +20,7 @@ public class GenerateTables {
 	public static void main(String[] args) throws IOException {
 
 		new GenerateTables(new URL(args[0]), new File(args[1]), new File(
-				args[1])).generate();
+				args[2])).download().render();
 	}
 
 	private static int parseCodePoint(final String s) {
@@ -46,7 +46,7 @@ public class GenerateTables {
 		this.outputDirectory = outputDirectory;
 	}
 
-	public void generate() throws IOException {
+	public GenerateTables download() throws IOException {
 		header.clear();
 		confusables.clear();
 
@@ -63,10 +63,16 @@ public class GenerateTables {
 			}
 		}
 
+		return this;
+	}
+
+	public void render() throws IOException {
+
 		final Path source = sourceDirectory.toPath();
 		final Path output = outputDirectory.toPath();
 
-		walkFileTree(source, new RenderTemplate(source, output, table, header, confusables));
+		walkFileTree(source, new RenderTemplate(source, output, table, header,
+				confusables));
 	}
 
 	private boolean parseHeader(BufferedReader reader) throws IOException {
@@ -112,16 +118,17 @@ public class GenerateTables {
 		// for mixed case (which may be later folded away). For example, this
 		// table contains the following entry not found in SL, SA, or ML:
 
-		final Table table = parseTable(fields[2]);
 		final int source = parseCodePoint(fields[0]);
-
 		final String[] targetPoints = fields[1].split(" ");
+		final Table table = parseTable(fields[2]);
+		final String comment = fields[3];
+
 		final int[] target = new int[targetPoints.length];
 		for (int i = 0; i < target.length; i++) {
 			target[i] = parseCodePoint(targetPoints[i]);
 		}
 
-		confusables.add(new Confusable(table, source, target));
+		confusables.add(new Confusable(table, source, target, comment));
 
 		return true;
 	}
