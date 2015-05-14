@@ -1,0 +1,54 @@
+case(confusable) ::= <<
+case <confusable.source>: 
+	return new int[]{ <confusable.target; separator=", ">};
+>>
+
+confusables(url,date,header, mixedScriptAnyCase, mixedScriptLowerCase, singleScriptAnyCase, singleScriptLowerCase) ::= <<
+package com.github.mpkorstanje.unicode.tr39confusables;
+
+/**
+ * This table is used to test cases of mixed-script and whole-script
+ * confusables, where both the source character and the target string are
+ * case folded. For example, this table contains the following entry not
+ * found in SL or SA:
+ * \<p\>
+ * # ( μ → 𝛍 ) GREEK SMALL LETTER MU → MATHEMATICAL BOLD SMALL MU
+ * \<p\>
+ * Source: <url>\<br\>  
+ * Generated: <date>\<br\>
+ * Original header:\<br\>
+ * <header ; separator="\<br\>\n * ">
+ */
+
+// Generated file; do not modify.  
+public class MixedScriptLowerCase implements Confusables {
+
+	MixedScriptLowerCase(){
+		// Not for construction
+	}
+	
+	public int[] get(int codePoint) {
+		// Split table in two to avoid method size limit
+		if(codePoint \<  <mixedScriptLowerCase.pivot.source> ){
+			return get01(codePoint);
+		} else {
+			return get02(codePoint);
+		}
+	}
+	private static int[] get01(int codePoint) {
+		switch (codePoint) {
+		<mixedScriptLowerCase.confusables01:case() ; anchor, separator="\n">
+		default:
+			return new int[]{codePoint};
+		}
+	}
+	private static int[] get02(int codePoint) {
+		switch (codePoint) {
+		<mixedScriptLowerCase.confusables02:case() ; anchor, separator="\n"> 
+		default:
+			return new int[]{codePoint};
+		}
+	}
+}
+
+>>
