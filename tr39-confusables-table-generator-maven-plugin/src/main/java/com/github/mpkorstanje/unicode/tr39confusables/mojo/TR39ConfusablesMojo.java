@@ -1,4 +1,4 @@
-package com.github.mpkorstanje.unicode.tr39confusables;
+package com.github.mpkorstanje.unicode.tr39confusables.mojo;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +14,8 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 
+import com.github.mpkorstanje.unicode.tr39confusables.generator.GenerateTables;
+
 /**
  * 
  * @author mpkorstanje
@@ -21,7 +23,7 @@ import org.apache.maven.project.MavenProject;
  */
 
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE, requiresOnline = true, threadSafe = true, requiresProject = true)
-public class TR39ConfusablesMojo extends AbstractMojo {
+public final class TR39ConfusablesMojo extends AbstractMojo {
 
 	/**
 	 * Specify grammar file encoding; e.g., euc-jp

@@ -10,11 +10,11 @@ package com.github.mpkorstanje.unicode.tr39confusables;
  * Original header:
  * <header ; separator="\n * ">
  */
-public class MixedScriptAnyCase implements Confusables {
+public class SingleScriptLowerCase implements Confusables {
 
 	public int[] get(int codePoint) {
 		// Split table in two to avoid method size limit
-		if(codePoint \<  <mixedScriptAnyCase.pivot.source> ){
+		if(codePoint \<  <singleScriptLowerCase.pivot.source> ){
 			return get01(codePoint);
 		} else {
 			return get02(codePoint);
@@ -22,14 +22,14 @@ public class MixedScriptAnyCase implements Confusables {
 	}
 	private static int[] get01(int codePoint) {
 		switch (codePoint) {
-		<mixedScriptAnyCase.confusables01:case() ; anchor, separator="\n">
+		<singleScriptLowerCase.confusables01:case() ; anchor, separator="\n">
 		default:
 			return new int[]{codePoint};
 		}
 	}
 	private static int[] get02(int codePoint) {
 		switch (codePoint) {
-		<mixedScriptAnyCase.confusables02:case() ; anchor, separator="\n"> 
+		<singleScriptLowerCase.confusables02:case() ; anchor, separator="\n"> 
 		default:
 			return new int[]{codePoint};
 		}
