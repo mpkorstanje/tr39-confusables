@@ -3,9 +3,6 @@ package com.github.mpkorstanje.unicode.tr39confusables;
 import static java.text.Normalizer.normalize;
 import static java.text.Normalizer.Form.NFD;
 import static com.github.mpkorstanje.unicode.tr39confusables.Confusables.MIXED_SCRIPT_ANY_CASE;
-
-import java.util.Iterator;
-
 /**
  * Implementation of Skeleton transform in <a
  * href="http://www.unicode.org/reports/tr39">Unicode TR39</a>.
