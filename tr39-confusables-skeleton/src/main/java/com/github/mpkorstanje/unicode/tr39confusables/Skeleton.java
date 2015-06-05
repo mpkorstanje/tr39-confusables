@@ -3,14 +3,15 @@ package com.github.mpkorstanje.unicode.tr39confusables;
 import static java.text.Normalizer.normalize;
 import static java.text.Normalizer.Form.NFD;
 import static com.github.mpkorstanje.unicode.tr39confusables.Confusables.MIXED_SCRIPT_ANY_CASE;
+
 /**
- * Implementation of Skeleton transform in <a
+ * Implementation of the Skeleton transform described in <a
  * href="http://www.unicode.org/reports/tr39">Unicode TR39</a>.
  * <p>
  * 
- * To see whether two strings X and Y are confusable according to a given
- * {@link Confusables} table (abbreviated as X ≅ Y), an implementation uses a
- * transform of X called a skeleton(X).
+ * The skeleton transform makes it possible to determine if two strings X and Y
+ * are confusable (abbreviated as X ≅ Y) according to a given {@link Confusables}
+ * table.
  * <p>
  * The transform consist of:
  * <p>

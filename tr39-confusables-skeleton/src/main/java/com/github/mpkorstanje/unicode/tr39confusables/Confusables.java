@@ -1,12 +1,11 @@
 package com.github.mpkorstanje.unicode.tr39confusables;
 
 /**
- * Implementation confusables tables in <a
+ * Implementation of confusables tables in <a
  * href="http://www.unicode.org/reports/tr39">Unicode TR39</a>.
  * <p>
  * To see whether two strings X and Y are confusable according to a given table
- * (abbreviated as X ≅ Y), use a transform of X called a skeleton(X) defined by
- * {@link Skeleton}.
+ * (abbreviated as X ≅ Y), use  {@link Skeleton}.
  * <p>
  * The data is organized into four different tables, depending on the desired
  * parameters. Each table provides a mapping from source characters to target
@@ -22,7 +21,7 @@ package com.github.mpkorstanje.unicode.tr39confusables;
  * 5, Mixed-Script Detection</a>, and it is the same script for each.
  * <p>
  * Examples: "so̷s" and "søs" in Latin, where the first word has the character
- * "o" followed by the character U+0337 ( ̷ ) COMBINING SHORT SOLIDUS OVERLAY.
+ * "o" followed by the character U+0337 ( ̷  ) COMBINING SHORT SOLIDUS OVERLAY.
  * <p>
  * X and Y are <a
  * href="http://www.unicode.org/reports/tr39/#mixed_script_confusables"
@@ -39,7 +38,7 @@ package com.github.mpkorstanje.unicode.tr39confusables;
  * <p>
  * Example: "scope" in Latin and "ѕсоре" in Cyrillic.
  * <p>
- * The MA table is the most complete. It is thus the recommended table to use,
+ * The mixed script any case table is the most complete. It is thus the recommended table to use,
  * unless there is a strong reason to use one of the others.
  * 
  * @author mpkorstanje

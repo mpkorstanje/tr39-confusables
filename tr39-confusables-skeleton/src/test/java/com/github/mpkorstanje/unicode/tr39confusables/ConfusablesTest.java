@@ -13,7 +13,7 @@ public class ConfusablesTest {
 	@Test
 	public void mixedScriptAnyCase() {
 		// * # ( Ι → l ) GREEK CAPITAL LETTER IOTA → LATIN SMALL LETTER L
-		test(MIXED_SCRIPT_ANY_CASE, "Ι", "l");
+		assertConfusable(MIXED_SCRIPT_ANY_CASE, "Ι", "l");
 	}
 
 	@Test
@@ -21,21 +21,22 @@ public class ConfusablesTest {
 		// # ( ø → o̷ ) LATIN SMALL LETTER O WITH STROKE → LATIN SMALL LETTER O,
 		// COMBINING SHORT SOLIDUS OVERLAY
 //		test(SINGLE_SCRIPT_LOWER_CASE, "ø", "" + '\u2134' + '\u0338');
-		test(SINGLE_SCRIPT_LOWER_CASE, "ø", "ℴ̸".trim());
+		assertConfusable(SINGLE_SCRIPT_LOWER_CASE, "ø", "ℴ̸".trim());
 	}
 
 	@Test
 	public void singleScriptAnyCase() {
 		// # ( O → 0 ) LATIN CAPITAL LETTER O → DIGIT ZERO
-		test(SINGLE_SCRIPT_ANY_CASE, "O", "0");
+		assertConfusable(SINGLE_SCRIPT_ANY_CASE, "O", "0");
 	}
 	@Test
 	public void mixedScriptLowerCase() {
 		 // # ( μ → 𝛍 ) GREEK SMALL LETTER MU → MATHEMATICAL BOLD SMALL MU
-		test(MIXED_SCRIPT_LOWER_CASE, "μ", "𝛍");
+		assertConfusable(MIXED_SCRIPT_LOWER_CASE, "μ", "𝛍");
 	}
 
-	private static void test(Confusables table, String source, String target) {
+	private static void assertConfusable(Confusables table, String source, String target) {
+		assertTrue(source.length() == 1);
 		source = normalize(source, NFD);
 		target = normalize(target, NFD);
 
