@@ -1,5 +1,6 @@
 package com.github.mpkorstanje.unicode.tr39confusables;
 
+import static java.lang.System.arraycopy;
 import static java.text.Normalizer.normalize;
 import static java.text.Normalizer.Form.NFD;
 import static com.github.mpkorstanje.unicode.tr39confusables.Confusables.MIXED_SCRIPT_ANY_CASE;
@@ -10,8 +11,8 @@ import static com.github.mpkorstanje.unicode.tr39confusables.Confusables.MIXED_S
  * <p>
  * 
  * The skeleton transform makes it possible to determine if two strings X and Y
- * are confusable (abbreviated as X ≅ Y) according to a given {@link Confusables}
- * table.
+ * are confusable (abbreviated as X ≅ Y) according to a given
+ * {@link Confusables} table.
  * <p>
  * The transform consist of:
  * <p>
@@ -76,27 +77,36 @@ public final class Skeleton {
 
 		// 2. Successively mapping each source character in X to the target
 		// string according to the specified data table.
-		final StringBuilder sb = new StringBuilder();
-		for (int codePoint : codePoints(s)) {
-			final int[] codePoints = confusables.get(codePoint);
-			sb.append(new String(codePoints, 0, codePoints.length));
+		int i = 0;
+		final int[][] codePoints = new int[s.length()][];
+		for (int offset = 0; offset < s.length(); offset = s.offsetByCodePoints(offset, 1)) {
+			codePoints[i++] = confusables.get(s.codePointAt(offset));
 		}
-
+		
 		// 3. Reapplying NFD.
-		s = normalize(sb.toString(), NFD);
+		s = normalize(toString(codePoints), NFD);
 		return s;
 	}
 
-	private static int[] codePoints(String s) {
-		int[] codePoints = new int[s.codePointCount(0, s.length())];
-		int i = 0;
-
-		for (int offset = 0; offset < s.length(); offset = s
-				.offsetByCodePoints(offset, 1)) {
-			codePoints[i++] = s.codePointAt(offset);
+	private static String toString(final int[][] codePoints) {
+		int length = 0;
+		for (int[] array : codePoints) {
+			if (array == null) {
+				break;
+			}
+			length += array.length;
 		}
-
-		return codePoints;
+		int[] result = new int[length];
+		int pos = 0;
+		for (int[] array : codePoints) {
+			if (array == null) {
+				break;
+			}
+			arraycopy(array, 0, result, pos, array.length);
+			pos += array.length;
+		}
+		
+		return new String(result, 0, result.length);
 	}
 
 	private final String skeleton;
