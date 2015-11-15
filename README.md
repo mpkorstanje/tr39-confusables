@@ -1,4 +1,4 @@
-# tr39-confusables [![Build Status](https://travis-ci.org/mpkorstanje/simmetrics.svg)](https://travis-ci.org/mpkorstanje/tr39-confusables)
+# tr39-confusables [![Build Status](https://travis-ci.org/mpkorstanje/tr39-confusables.svg)](https://travis-ci.org/mpkorstanje/tr39-confusables)
 Skeleton algorithm from [Unicode TR39](http://www.unicode.org/reports/tr39/) for testing confusability of strings.
 
 ## Usage ##
