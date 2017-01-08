@@ -1,6 +1,5 @@
 package com.github.mpkorstanje.unicode.tr39confusables.generator;
 
-import static com.github.mpkorstanje.unicode.tr39confusables.generator.Table.parseTable;
 import static java.lang.Character.isValidCodePoint;
 import static java.lang.Integer.parseInt;
 import static java.nio.file.Files.walkFileTree;
@@ -113,14 +112,12 @@ public class GenerateTables {
 			throw new IllegalStateException(
 					"Expected atleast 4 fields while parsing " + line);
 		}
-		// Mixed-Script, Any-Case This table is used to test cases of
-		// mixed-script and whole-script confusables, where the output allows
-		// for mixed case (which may be later folded away). For example, this
-		// table contains the following entry not found in SL, SA, or ML:
 
 		final int source = parseCodePoint(fields[0]);
 		final String[] targetPoints = fields[1].split(" ");
-		final Table table = parseTable(fields[2]);
+		if (!fields[2].equals("MA")) {
+			throw new IllegalArgumentException("As of version 8.0 only MA is supported.");
+		}
 		final String comment = fields[3];
 
 		final int[] target = new int[targetPoints.length];
@@ -128,7 +125,7 @@ public class GenerateTables {
 			target[i] = parseCodePoint(targetPoints[i]);
 		}
 
-		confusables.add(new Confusable(table, source, target, comment));
+		confusables.add(new Confusable(source, target, comment));
 
 		return true;
 	}

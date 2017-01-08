@@ -5,12 +5,10 @@ import java.util.Arrays;
 final class Confusable {
 
 	public final int source;
-	public final Table table;
 	public final int[] target;
 	public final String comment;
 
-	public Confusable(Table table, int source, int[] target, String comment) {
-		this.table = table;
+	public Confusable(int source, int[] target, String comment) {
 		this.source = source;
 		this.target = target;
 		this.comment = comment;
@@ -19,7 +17,7 @@ final class Confusable {
 	@Override
 	public String toString() {
 		return "Confusable [source=" + source + ", target="
-				+ Arrays.toString(target) + ", table=" + table + "]";
+				+ Arrays.toString(target)  + "]";
 	}
 
 }

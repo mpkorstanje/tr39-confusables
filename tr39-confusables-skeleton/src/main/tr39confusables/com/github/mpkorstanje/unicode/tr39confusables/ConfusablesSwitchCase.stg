@@ -3,30 +3,30 @@ case <confusable.source>:
 	return new int[]{ <confusable.target; separator=", ">};
 >>
 
-confusables(url,date,header, mixedScriptAnyCase, mixedScriptLowerCase, singleScriptAnyCase, singleScriptLowerCase) ::= <<
+confusables(url,date,header, confusablesTable) ::= <<
 package com.github.mpkorstanje.unicode.tr39confusables;
 
 /**
- * This table is used to test cases of single-script confusables, where the
- * output allows for mixed case (which may be later folded away). For
- * example, this table contains the following entry not found in SL:
+ * This table is used to test cases of confusables
  * \<p\>
- * # ( O → 0 ) LATIN CAPITAL LETTER O → DIGIT ZERO
+ * # ( Ι → l ) GREEK CAPITAL LETTER IOTA → LATIN SMALL LETTER L
  * \<p\>
  * Source: <url>\<br\>  
  * Generated: <date>\<br\>
  * Original header:\<br\>
  * <header ; separator="\<br\>\n * ">
  */
-public class SingleScriptAnyCase implements Confusables {
 
-	SingleScriptAnyCase(){
-		// Not for construction
+// Generated file; do not modify.  
+final class ConfusablesSwitchCase implements Confusables {
+
+	ConfusablesSwitchCase(){
+		// Not for public construction
 	}
 
 	public int[] get(int codePoint) {
 		// Split table in two to avoid method size limit
-		if(codePoint \<  <singleScriptAnyCase.pivot.source> ){
+		if(codePoint \<  <confusablesTable.pivot.source> ){
 			return get01(codePoint);
 		} else {
 			return get02(codePoint);
@@ -34,14 +34,14 @@ public class SingleScriptAnyCase implements Confusables {
 	}
 	private static int[] get01(int codePoint) {
 		switch (codePoint) {
-		<singleScriptAnyCase.confusables01:case() ; anchor, separator="\n">
+		<confusablesTable.confusables01:case() ; anchor, separator="\n">
 		default:
 			return new int[]{codePoint};
 		}
 	}
 	private static int[] get02(int codePoint) {
 		switch (codePoint) {
-		<singleScriptAnyCase.confusables02:case() ; anchor, separator="\n"> 
+		<confusablesTable.confusables02:case() ; anchor, separator="\n">
 		default:
 			return new int[]{codePoint};
 		}

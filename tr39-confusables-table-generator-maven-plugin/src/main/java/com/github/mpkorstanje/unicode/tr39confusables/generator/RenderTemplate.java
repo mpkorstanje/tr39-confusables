@@ -1,10 +1,5 @@
 package com.github.mpkorstanje.unicode.tr39confusables.generator;
 
-import static com.github.mpkorstanje.unicode.tr39confusables.generator.Table.MixedScriptAnyCase;
-import static com.github.mpkorstanje.unicode.tr39confusables.generator.Table.MixedScriptLowerCase;
-import static com.github.mpkorstanje.unicode.tr39confusables.generator.Table.SingleScriptAnyCase;
-import static com.github.mpkorstanje.unicode.tr39confusables.generator.Table.SingleScriptLowerCase;
-import static com.google.common.collect.Collections2.filter;
 import static java.util.Collections.sort;
 
 import java.io.File;
@@ -17,7 +12,6 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -25,8 +19,6 @@ import java.util.List;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
-
-import com.google.common.base.Predicate;
 
 final class RenderTemplate extends SimpleFileVisitor<Path> {
 
@@ -36,33 +28,14 @@ final class RenderTemplate extends SimpleFileVisitor<Path> {
 			return Integer.compare(o1.source, o2.source);
 		}
 	};
-	
-	private static final class InTable implements Predicate<Confusable> {
 
-		private final Table table;
-
-		public InTable(Table table) {
-			this.table = table;
-		}
-
-		@Override
-		public boolean apply(Confusable input) {
-			return table.equals(input.table);
-		}
-	}
 	
 	private static final String JAVA = ".java";
 	private static final String STG = ".stg";
 	
-	private final TableModel mixedScriptAnyCase;
-
-	private final TableModel mixedScriptLowerCase;
+	private final TableModel confusablesTable;
 
 	private final Path output;
-
-	private final TableModel singleScriptAnyCase;
-
-	private final TableModel singleScriptLowerCase;
 
 	private final Path source;
 	private final URL table;
@@ -76,28 +49,7 @@ final class RenderTemplate extends SimpleFileVisitor<Path> {
 		this.header = header;
 
 		sort(confusables, SOURCE_ASC);
-
-		{
-			List<Confusable> filtered = new ArrayList<>(filter(confusables,
-					new InTable(MixedScriptAnyCase)));
-			mixedScriptAnyCase = new TableModel(filtered);
-		}
-		{
-			List<Confusable> filtered = new ArrayList<>(filter(confusables,
-					new InTable(MixedScriptLowerCase)));
-			mixedScriptLowerCase = new TableModel(filtered);
-		}
-		{
-			List<Confusable> filtered = new ArrayList<>(filter(confusables,
-					new InTable(SingleScriptAnyCase)));
-			singleScriptAnyCase = new TableModel(filtered);
-		}
-		{
-			List<Confusable> filtered = new ArrayList<>(filter(confusables,
-					new InTable(SingleScriptLowerCase)));
-			singleScriptLowerCase = new TableModel(filtered);
-		}
-
+		confusablesTable = new TableModel(confusables);
 	}
 
 	private ST createTemplate(Path file) {
@@ -105,14 +57,10 @@ final class RenderTemplate extends SimpleFileVisitor<Path> {
 		STGroup group = new STGroupFile(file.toString());
 		ST template = group.getInstanceOf("confusables");
 
-		
 		template.add("url", table);
 		template.add("date", new Date());
 		template.add("header", header);
-		template.add("mixedScriptAnyCase", mixedScriptAnyCase);
-		template.add("mixedScriptLowerCase", mixedScriptLowerCase);
-		template.add("singleScriptAnyCase", singleScriptAnyCase);
-		template.add("singleScriptLowerCase", singleScriptLowerCase);
+		template.add("confusablesTable", confusablesTable);
 
 		return template;
 	}

@@ -1,19 +1,17 @@
 package com.github.mpkorstanje.unicode.tr39confusables;
 
+import static java.lang.System.arraycopy;
 import static java.text.Normalizer.normalize;
 import static java.text.Normalizer.Form.NFD;
-import static com.github.mpkorstanje.unicode.tr39confusables.Confusables.MIXED_SCRIPT_ANY_CASE;
-
-import java.util.Iterator;
 
 /**
- * Implementation of Skeleton transform in <a
+ * Implementation of the Skeleton transform described in <a
  * href="http://www.unicode.org/reports/tr39">Unicode TR39</a>.
  * <p>
  * 
- * To see whether two strings X and Y are confusable according to a given
- * {@link Confusables} table (abbreviated as X ≅ Y), an implementation uses a
- * transform of X called a skeleton(X).
+ * The skeleton transform makes it possible to determine if two strings X and Y
+ * are confusable (abbreviated as X ≅ Y) according to a given
+ * {@link Confusables} table.
  * <p>
  * The transform consist of:
  * <p>
@@ -41,6 +39,8 @@ import java.util.Iterator;
  */
 public final class Skeleton {
 
+	private static final Confusables table = new ConfusablesSwitchCase();
+
 	/**
 	 * Applies a skeleton transform to {@code s}. Uses the the Mixed Script Any
 	 * Case table.
@@ -52,53 +52,44 @@ public final class Skeleton {
 	 *             when {@code s } is null
 	 */
 	public static String skeleton(String s) {
-		return skeleton(s, MIXED_SCRIPT_ANY_CASE);
-	}
-
-	/**
-	 * Applies a skeleton transform to {@code s} using the given
-	 * {@code confusables} as the lookup table.
-	 * 
-	 * @param s
-	 *            a string
-	 * @param confusables
-	 *            a confusables lookup table
-	 * @return a string transformed by skeleton(X)
-	 * @throws NullPointerException
-	 *             when {@code s } or {@code confusables} is null
-	 */
-	public static String skeleton(String s, Confusables confusables) {
 		if (s == null)
 			throw new NullPointerException("s may not be null");
-		if (confusables == null)
-			throw new NullPointerException("confusables may not be null");
 
 		// 1. Converting X to NFD format
 		s = normalize(s, NFD);
 
 		// 2. Successively mapping each source character in X to the target
 		// string according to the specified data table.
-		final StringBuilder sb = new StringBuilder();
-		for (int codePoint : codePoints(s)) {
-			final int[] codePoints = confusables.get(codePoint);
-			sb.append(new String(codePoints, 0, codePoints.length));
+		int i = 0;
+		final int[][] codePoints = new int[s.length()][];
+		for (int offset = 0; offset < s.length(); offset = s.offsetByCodePoints(offset, 1)) {
+			codePoints[i++] = table.get(s.codePointAt(offset));
 		}
-
+		
 		// 3. Reapplying NFD.
-		s = normalize(sb.toString(), NFD);
+		s = normalize(toString(codePoints), NFD);
 		return s;
 	}
 
-	private static int[] codePoints(String s) {
-		int[] codePoints = new int[s.codePointCount(0, s.length())];
-		int i = 0;
-
-		for (int offset = 0; offset < s.length(); offset = s
-				.offsetByCodePoints(offset, 1)) {
-			codePoints[i++] = s.codePointAt(offset);
+	private static String toString(final int[][] codePoints) {
+		int length = 0;
+		for (int[] array : codePoints) {
+			if (array == null) {
+				break;
+			}
+			length += array.length;
 		}
-
-		return codePoints;
+		int[] result = new int[length];
+		int pos = 0;
+		for (int[] array : codePoints) {
+			if (array == null) {
+				break;
+			}
+			arraycopy(array, 0, result, pos, array.length);
+			pos += array.length;
+		}
+		
+		return new String(result, 0, result.length);
 	}
 
 	private final String skeleton;
@@ -113,22 +104,7 @@ public final class Skeleton {
 	 *             when {@code s } is null
 	 */
 	public Skeleton(String s) {
-		this(s, MIXED_SCRIPT_ANY_CASE);
-	}
-
-	/**
-	 * Creates a skeleton transform of {@code s} using {@code confusables} as
-	 * the lookup table.
-	 * 
-	 * @param s
-	 *            a string
-	 * @param confusables
-	 *            a confusables lookup table
-	 * @throws NullPointerException
-	 *             when {@code s } or {@code confusables} is null
-	 */
-	public Skeleton(String s, Confusables confusables) {
-		this.skeleton = skeleton(s, confusables);
+		this.skeleton = skeleton(s);
 	}
 
 	@Override
