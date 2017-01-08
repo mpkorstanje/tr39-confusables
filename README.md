@@ -1,7 +1,8 @@
-# tr39-confusables [![Build Status](https://travis-ci.org/mpkorstanje/simmetrics.svg)](https://travis-ci.org/mpkorstanje/tr39-confusables)
+# tr39-confusables [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.mpkorstanje/tr39-confusables-skeleton/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.mpkorstanje/tr39-confusables-skeleton) [![Build Status](https://travis-ci.org/mpkorstanje/tr39-confusables.svg)](https://travis-ci.org/mpkorstanje/tr39-confusables)
+
 Skeleton algorithm from [Unicode TR39](http://www.unicode.org/reports/tr39/) for testing confusability of strings.
 
-Version 8.0.10 matches [version 8.0 draft 10 of TR #39](http://www.unicode.org/reports/tr39/tr39-10.html)
+Version 8.0.10 matches [version 8.0 draft 10 of TR39](http://www.unicode.org/reports/tr39/tr39-10.html)
 
 ## Usage ##
 ```
