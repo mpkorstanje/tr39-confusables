@@ -1,6 +1,8 @@
 # tr39-confusables [![Build Status](https://travis-ci.org/mpkorstanje/simmetrics.svg)](https://travis-ci.org/mpkorstanje/tr39-confusables)
 Skeleton algorithm from [Unicode TR39](http://www.unicode.org/reports/tr39/) for testing confusability of strings.
 
+Version 8.0.10 matches [version 8.0 draft 10 of TR #39](http://www.unicode.org/reports/tr39/tr39-10.html)
+
 ## Usage ##
 ```
 import static com.github.mpkorstanje.unicode.tr39confusables.Skeleton.skeleton;
@@ -30,6 +32,6 @@ Note on the use of `Skeleton`, from TR39:
 <dependency>
   <groupId>com.github.mpkorstanje</groupId>
   <artifactId>tr39-confusables-skeleton</artifactId>
-  <version>0.5.0</version>
+  <version>8.0.10</version>
 </dependency>
 ```

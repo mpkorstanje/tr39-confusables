@@ -3,7 +3,6 @@ package com.github.mpkorstanje.unicode.tr39confusables;
 import static java.lang.System.arraycopy;
 import static java.text.Normalizer.normalize;
 import static java.text.Normalizer.Form.NFD;
-import static com.github.mpkorstanje.unicode.tr39confusables.Confusables.MIXED_SCRIPT_ANY_CASE;
 
 /**
  * Implementation of the Skeleton transform described in <a
@@ -40,6 +39,8 @@ import static com.github.mpkorstanje.unicode.tr39confusables.Confusables.MIXED_S
  */
 public final class Skeleton {
 
+	private static final Confusables table = new ConfusablesSwitchCase();
+
 	/**
 	 * Applies a skeleton transform to {@code s}. Uses the the Mixed Script Any
 	 * Case table.
@@ -51,26 +52,8 @@ public final class Skeleton {
 	 *             when {@code s } is null
 	 */
 	public static String skeleton(String s) {
-		return skeleton(s, MIXED_SCRIPT_ANY_CASE);
-	}
-
-	/**
-	 * Applies a skeleton transform to {@code s} using the given
-	 * {@code confusables} as the lookup table.
-	 * 
-	 * @param s
-	 *            a string
-	 * @param confusables
-	 *            a confusables lookup table
-	 * @return a string transformed by skeleton(X)
-	 * @throws NullPointerException
-	 *             when {@code s } or {@code confusables} is null
-	 */
-	public static String skeleton(String s, Confusables confusables) {
 		if (s == null)
 			throw new NullPointerException("s may not be null");
-		if (confusables == null)
-			throw new NullPointerException("confusables may not be null");
 
 		// 1. Converting X to NFD format
 		s = normalize(s, NFD);
@@ -80,7 +63,7 @@ public final class Skeleton {
 		int i = 0;
 		final int[][] codePoints = new int[s.length()][];
 		for (int offset = 0; offset < s.length(); offset = s.offsetByCodePoints(offset, 1)) {
-			codePoints[i++] = confusables.get(s.codePointAt(offset));
+			codePoints[i++] = table.get(s.codePointAt(offset));
 		}
 		
 		// 3. Reapplying NFD.
@@ -121,22 +104,7 @@ public final class Skeleton {
 	 *             when {@code s } is null
 	 */
 	public Skeleton(String s) {
-		this(s, MIXED_SCRIPT_ANY_CASE);
-	}
-
-	/**
-	 * Creates a skeleton transform of {@code s} using {@code confusables} as
-	 * the lookup table.
-	 * 
-	 * @param s
-	 *            a string
-	 * @param confusables
-	 *            a confusables lookup table
-	 * @throws NullPointerException
-	 *             when {@code s } or {@code confusables} is null
-	 */
-	public Skeleton(String s, Confusables confusables) {
-		this.skeleton = skeleton(s, confusables);
+		this.skeleton = skeleton(s);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.google.common.base.Predicate;
+import com.google.common.collect.ImmutableList;
 
 final class TableModel {
 
@@ -25,16 +26,16 @@ final class TableModel {
 
 	}
 
-	private final List<Confusable> confusables;
+	private final ImmutableList<Confusable> confusables;
 	private final Collection<Confusable> confusables01;
 	private final Collection<Confusable> confusables02;
 	private final Confusable pivot;
 
 	public TableModel(List<Confusable> confusables) {
-		this.confusables = confusables;
-		this.pivot = confusables.get(confusables.size() / 2);
-		this.confusables01 = filter(confusables, new BelowPivot(pivot));
-		this.confusables02 = filter(confusables, not(new BelowPivot(pivot)));
+		this.confusables = ImmutableList.copyOf(confusables);
+		this.pivot = confusables.get(this.confusables.size() / 2);
+		this.confusables01 = filter(this.confusables, new BelowPivot(pivot));
+		this.confusables02 = filter(this.confusables, not(new BelowPivot(pivot)));
 	}
 
 	public List<Confusable> getConfusables() {
