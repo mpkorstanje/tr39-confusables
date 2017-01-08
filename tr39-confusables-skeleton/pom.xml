@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.github.mpkorstanje</groupId>
 		<artifactId>tr39-confusables</artifactId>
-		<version>8.0.10-SNAPSHOT</version>
+		<version>8.0.10</version>
 	</parent>
 
 	<artifactId>tr39-confusables-skeleton</artifactId>
@@ -17,7 +17,7 @@
 			<plugin>
 				<groupId>com.github.mpkorstanje</groupId>
 				<artifactId>tr39-confusables-table-generator-maven-plugin</artifactId>
-				<version>8.0.10-SNAPSHOT</version>
+				<version>8.0.10</version>
 
 				<executions>
 					<execution>
